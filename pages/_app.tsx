@@ -1,8 +1,9 @@
 import type { AppProps } from "next/app";
-import Layout from "../src/components/Layout";
-import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { useState } from "react";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import Layout from "../components/Layout";
+import "../styles/globals.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(

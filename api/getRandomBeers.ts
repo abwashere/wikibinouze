@@ -1,13 +1,19 @@
-import { useQuery } from "react-query";
-import { getBeersUrl, getRandomBeerUrl } from "../utils/urls";
 import axios from "axios";
+import { useQuery } from "react-query";
+import { IBeer } from "../types";
+import { getRandomBeerUrl } from "../utils/urls";
 
-const fetchRandomBeers = async () => {
+export const fetchRandomBeers = async (): Promise<IBeer[]> => {
   const { data: beer1 } = await axios.get(getRandomBeerUrl);
   const { data: beer2 } = await axios.get(getRandomBeerUrl);
   return [...beer1, ...beer2];
 };
 
 export const useGetRandomBeers = () => {
-  return useQuery("randomBeers", fetchRandomBeers);
+  const { isLoading: isLoadingRandomBeers, data: randomBeers } = useQuery(
+    "randomBeers",
+    fetchRandomBeers,
+    { refetchInterval: 10000 }
+  );
+  return { isLoadingRandomBeers, randomBeers };
 };

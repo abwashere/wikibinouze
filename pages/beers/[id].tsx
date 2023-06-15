@@ -2,8 +2,27 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { fetchBeers } from "../../api";
-import BackButton from "../../src/components/BackButton";
+import BackButton from "../../components/BackButton";
+import Date from "../../components/Date";
 import { IBeer } from "../../types";
+import { styled } from "../../stitches.config";
+
+const StyledContainer = styled("div", {
+  display: "flex",
+  gap: 20,
+});
+
+const StyledHeader = styled("h2", {
+  margin: 0,
+  fontSize: "$xl",
+  fontWeight: 500,
+});
+
+const StyledDescription = styled("div", {
+  marginTop: 20,
+  color: "$darkGray",
+  fontWeight: 300,
+});
 
 export default function BeerPage() {
   const router = useRouter();
@@ -17,21 +36,16 @@ export default function BeerPage() {
   return (
     <div>
       <BackButton text="Back" />
-      <div>
+      <StyledContainer>
         <div>
-          <Image
-            src={beer.image_url}
-            alt="Picture of the beer"
-            width={500}
-            height={500}
-          />
+          <Image src={beer.image_url} alt="Picture of the beer" width={30} height={100} />
         </div>
         <div>
-          <h2>{beer.name}</h2>
-          <p>{beer.first_brewed}</p>
-          <p>{beer.description}</p>
+          <StyledHeader>{beer.name}</StyledHeader>
+          <Date date={beer.first_brewed} />
+          <StyledDescription>{beer.description}</StyledDescription>
         </div>
-      </div>
+      </StyledContainer>
     </div>
   );
 }
