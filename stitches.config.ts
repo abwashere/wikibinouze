@@ -13,7 +13,8 @@ export const {
   theme: {
     colors: {
       gray: "gainsboro",
-      darkGray: "gray",
+      darkGray: "#545454",
+      lightOrange: "#ffedce",
     },
     fontSizes: {
       s: "0.8rem",

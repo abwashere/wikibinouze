@@ -1,10 +1,13 @@
 import { IBeer } from "../../types";
 import Date from "../Date";
-import { styled } from "../../stitches.config";
+import { keyframes, styled } from "../../stitches.config";
+import Link from "next/link";
 
-const StyledLink = styled("a", {
-  textDecoration: "none",
-  color: "black",
+const bounce = keyframes({
+  "0%": { transform: "translateY(0x)" },
+  "30%": { transform: "translateY(-3px)" },
+  "50%": { transform: "translateY(3px)" },
+  "100%": { transform: "translateY(0px)" },
 });
 
 const StyledDiv = styled("div", {
@@ -12,9 +15,11 @@ const StyledDiv = styled("div", {
   justifyContent: "space-between",
   alignItems: "center",
   padding: "10px 15px",
-  borderRadius: 40,
+  marginBottom: 10,
+  borderRadius: 5,
   "&:hover": {
-    backgroundColor: "orange",
+    backgroundColor: "$lightOrange",
+    animation: `${bounce} 700ms`,
   },
   fontSize: "$s",
 });
@@ -25,11 +30,11 @@ type Props = {
 
 export default function BeersListItem({ beer }: Props) {
   return (
-    <StyledLink href={`/beers/${beer.id}`}>
+    <Link href={`/beers/${beer.id}`}>
       <StyledDiv>
         <span>{beer.name}</span>
         <Date date={beer.first_brewed} />
       </StyledDiv>
-    </StyledLink>
+    </Link>
   );
 }

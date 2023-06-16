@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 
@@ -23,7 +22,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
-        <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
     </QueryClientProvider>
   );

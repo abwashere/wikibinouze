@@ -11,7 +11,7 @@ const StyledCarrousel = styled("div", {
   gridTemplateColumns: "1fr 1fr",
   gap: 20,
   marginBottom: 20,
-  height: 230,
+  minHeight: 230,
 });
 
 export default function Carrousel({ beers }: Props) {

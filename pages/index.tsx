@@ -1,12 +1,5 @@
 import { useState } from "react";
-import { DehydratedState, QueryClient, dehydrate } from "react-query";
-import {
-  fetchBeers,
-  fetchRandomBeers,
-  useGetBeers,
-  useGetBeersByName,
-  useGetRandomBeers,
-} from "../api";
+import { useGetBeers, useGetBeersByName, useGetRandomBeers } from "../api";
 import BeersList from "../components/BeersList";
 import Carrousel from "../components/Carrousel";
 import { SearchBar } from "../components/SearchBar";
@@ -31,10 +24,11 @@ export default function Home() {
       <SearchBar style={{ marginBottom: 20 }}>
         <input
           type="text"
+          aria-label="searchInput"
+          placeholder="Search"
           value={inputVal}
           onChange={(e) => setInputVal(e.target.value.toLowerCase())}
         />
-        {searchedBeers?.length ? <>{searchedBeers[0].name}</> : null}
       </SearchBar>
       {debouncedSearchValue === "" ? (
         <BeersList beers={beers} />
@@ -46,12 +40,3 @@ export default function Home() {
     </div>
   );
 }
-
-export const getServerSideProps = async (): Promise<{
-  props: { dehydratedState: DehydratedState };
-}> => {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("beers", () => fetchBeers());
-  await queryClient.prefetchQuery("randomBeers", fetchRandomBeers);
-  return { props: { dehydratedState: dehydrate(queryClient) } };
-};

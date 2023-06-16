@@ -1,38 +1,35 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import { fetchBeers } from "../../api";
+import { QueryClient, dehydrate } from "react-query";
+import { fetchAllBeers } from "../../api";
+import { fetchBeerById, useGetBeersById } from "../../api/getBeerById";
 import BackButton from "../../components/BackButton";
 import Date from "../../components/Date";
-import { IBeer } from "../../types";
 import { styled } from "../../stitches.config";
+
+type PageProps = {
+  id: any;
+};
 
 const StyledContainer = styled("div", {
   display: "flex",
   gap: 20,
+
+  "& h2": {
+    margin: 0,
+    fontSize: "$xl",
+    fontWeight: 500,
+  },
+  "& p.description": {
+    marginTop: 20,
+    color: "$darkGray",
+    fontWeight: 300,
+  },
 });
 
-const StyledHeader = styled("h2", {
-  margin: 0,
-  fontSize: "$xl",
-  fontWeight: 500,
-});
-
-const StyledDescription = styled("div", {
-  marginTop: 20,
-  color: "$darkGray",
-  fontWeight: 300,
-});
-
-export default function BeerPage() {
-  const router = useRouter();
-  const id = Number(router.query.id);
-  const { isError, data: beer } = useQuery(["beers"], fetchBeers, {
-    select: (beers) => beers.find((beer: IBeer) => beer.id === id),
-  });
+export default function BeerPage({ id }: PageProps) {
+  const { beer } = useGetBeersById(id);
 
   if (!beer) return <p>Loading...</p>;
-  if (isError) return <p>Server error</p>;
   return (
     <div>
       <BackButton text="Back" />
@@ -41,11 +38,28 @@ export default function BeerPage() {
           <Image src={beer.image_url} alt="Picture of the beer" width={30} height={100} />
         </div>
         <div>
-          <StyledHeader>{beer.name}</StyledHeader>
+          <h2>{beer.name}</h2>
           <Date date={beer.first_brewed} />
-          <StyledDescription>{beer.description}</StyledDescription>
+          <p className="description">{beer.description}</p>
         </div>
       </StyledContainer>
     </div>
   );
 }
+
+export const getStaticPaths = async () => {
+  const beers = await fetchAllBeers();
+  const paths = beers.map((beer) => ({
+    params: { id: beer.id.toString() },
+  }));
+
+  return { paths, fallback: 'blocking' };
+};
+
+export const getStaticProps = async (context: any) => {
+  const id = context.params.id;
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["beer", id], () => fetchBeerById(id));
+  return { props: { dehydratedState: dehydrate(queryClient), id } };
+};

@@ -1,10 +1,15 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { IBeer } from "../types";
-import { getBeersUrl } from "../utils/urls";
+import { API_BASE_URL, getTenBeersUrl } from "../utils/urls";
 
 export const fetchBeers = async (): Promise<IBeer[]> => {
-  const { data } = await axios.get(getBeersUrl);
+  const { data } = await axios.get(getTenBeersUrl);
+  return data;
+};
+
+export const fetchAllBeers = async (): Promise<IBeer[]> => {
+  const { data } = await axios.get(API_BASE_URL);
   return data;
 };
 
