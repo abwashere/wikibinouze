@@ -9,5 +9,10 @@ export const fetchBeers = async (): Promise<IBeer[]> => {
 };
 
 export const useGetBeers = () => {
-  return useQuery(["beers"], fetchBeers);
+  const {
+    isLoading: isLoadingBeers,
+    isError,
+    data: beers,
+  } = useQuery(["beers"], fetchBeers);
+  return { isLoadingBeers, isError, beers };
 };
