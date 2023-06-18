@@ -12,7 +12,8 @@ export default function Home() {
   const { isLoadingRandomBeers, randomBeers } = useGetRandomBeers();
 
   const debouncedSearchValue = useDebounce(inputVal);
-  const { searchedBeers } = useGetBeersByName(debouncedSearchValue);
+  const { searchedBeers, isLoadingSearchResults } =
+    useGetBeersByName(debouncedSearchValue);
 
   return isLoadingBeers || isLoadingRandomBeers ? (
     <span>Loading...</span>
@@ -30,12 +31,13 @@ export default function Home() {
           onChange={(e) => setInputVal(e.target.value.toLowerCase())}
         />
       </SearchBar>
-      {debouncedSearchValue === "" ? (
-        <BeersList beers={beers} />
-      ) : searchedBeers?.length ? (
+
+      {searchedBeers?.length ? (
         <BeersList beers={searchedBeers} />
-      ) : (
+      ) : !searchedBeers?.length && !isLoadingSearchResults && debouncedSearchValue ? (
         <div style={{ textAlign: "center" }}>No data found</div>
+      ) : (
+        <BeersList beers={beers} />
       )}
     </div>
   );

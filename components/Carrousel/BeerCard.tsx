@@ -25,7 +25,7 @@ const AnimatedDiv = styled("div", {
   flexDirection: "column",
   "@mobile": { padding: 5 },
   padding: 20,
-  height: 230,
+  height: 240,
 
   "& h2": {
     fontSize: "$m",

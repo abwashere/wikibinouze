@@ -16,7 +16,7 @@ const StyledContainer = styled("div", {
 
   "& h2": {
     margin: 0,
-    fontSize: "$xl",
+    fontSize: "$l",
     fontWeight: 500,
   },
   "& p.description": {

@@ -19,13 +19,11 @@ export const {
     fontSizes: {
       s: "0.8rem",
       m: "1rem",
-      l: "1.2rem",
-      xl: "1.5rem",
+      l: "1.5rem",
     },
   },
   media: {
     mobile: "(max-width: 639px)",
-    tablet: "(min-width: 640px)",
     laptop: "(min-width: 1024px)",
   },
   utils: {
