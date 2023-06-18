@@ -6,16 +6,22 @@ type Props = {
   beers: IBeer[] | undefined;
 };
 
-const StyledContainer = styled("div", {
+const StyledContainer = styled("ul", {
   width: "80%",
   margin: "auto",
+  paddingInlineStart: 0,
+  "& li": {
+    listStyle: "none",
+  },
 });
 
 export default function BeersList({ beers }: Props) {
   return (
     <StyledContainer>
       {beers?.map((beer: IBeer) => (
-        <BeersListItem key={beer.id} beer={beer} />
+        <li key={beer.id}>
+          <BeersListItem beer={beer} />
+        </li>
       ))}
     </StyledContainer>
   );

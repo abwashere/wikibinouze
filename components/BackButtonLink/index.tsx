@@ -19,10 +19,10 @@ const StyledDiv = styled("div", {
   },
 });
 
-export default function BackButton({ text }: Props) {
+export default function BackButtonLink({ text }: Props) {
   return (
     <Link href="/">
-      <StyledDiv data-testid="back-button-div">
+      <StyledDiv>
         <Image src="/icons/arrow_back.svg" alt="Back arrow icon" width={25} height={25} />
         <p>{text}</p>
       </StyledDiv>

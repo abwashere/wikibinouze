@@ -2,7 +2,7 @@ import Image from "next/image";
 import { QueryClient, dehydrate } from "react-query";
 import { fetchAllBeers } from "../../api";
 import { fetchBeerById, useGetBeersById } from "../../api/getBeerById";
-import BackButton from "../../components/BackButton";
+import BackButtonLink from "../../components/BackButtonLink";
 import Date from "../../components/Date";
 import { styled } from "../../stitches.config";
 
@@ -32,7 +32,7 @@ export default function BeerPage({ id }: PageProps) {
   if (!beer) return <p>Loading...</p>;
   return (
     <div>
-      <BackButton text="Back" />
+      <BackButtonLink text="Back" />
       <StyledContainer>
         <div>
           <Image src={beer.image_url} alt="Picture of the beer" width={30} height={100} />
@@ -53,7 +53,7 @@ export const getStaticPaths = async () => {
     params: { id: beer.id.toString() },
   }));
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async (context: any) => {
